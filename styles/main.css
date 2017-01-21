@@ -1,0 +1,30 @@
+body {
+    background: #3d6644;
+    text-align: center;
+}
+
+[id^=m],
+[id^=t] {
+    margin-top: 1rem;
+    font-size: 2rem;
+    color: #f9f7fb;
+    display: inline-block;
+}
+
+#player {
+    margin-top: 3rem;
+    font-size: 1rem;
+    appearance: none;
+    background: transparent;
+    border: 2px solid #f9f7fb;
+    color: #f9f7fb;
+    padding: .6rem;
+    border-radius: .6rem;
+}
+
+#player:active {
+     transform: scale(.9);
+ }
+#player:disabled {
+     opacity: .2;
+ }

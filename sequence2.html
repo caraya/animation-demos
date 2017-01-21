@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background: #eee;
+            text-align: center;
+        }
+
+        [id^="i"],
+        [id^="o"] {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #00f;
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            border-radius: 50%;
+            margin: 1rem auto;
+        }
+
+        #player {
+            margin-top: 3rem;
+            font-size: 1rem;
+            background: transparent;
+            border: 2px solid #000;
+            color: teal;
+            padding: .6rem;
+            border-radius: .6rem;
+        }
+
+        #player:active {
+            transform: scale(.9);
+        }
+        #player:disabled {
+            opacity: .2;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="i0">1</div>
+<div id="i1">2</div>
+<div>
+    <div id="o0">A</div>
+    <div id="o1">B</div>
+</div>
+<button id="player">Play</button>
+
+<script src="scripts/web-animations-next.min.js"></script>
+<script>
+let ms = Array.prototype.slice.call(document.querySelectorAll('[id^=i]'));
+let ts = Array.prototype.slice.call(document.querySelectorAll('[id^=o]'));
+let keyframeEffects = [];
+let keyframeEffects2 = [];
+
+let effects = {
+    translations1: [
+        { transform: 'translateX(0px)', offset: 0 },
+        { transform: 'translateX(500px)', offset: .7 },
+        { transform: 'translateX(0px)', offset: 1 }
+    ],
+    translations2: [
+        { transform: 'translateX(0px)', offset: 0 },
+        { transform: 'translateX(-500px)', offset: .7 },
+        { transform: 'translateX(0px)', offset: 1 }
+    ]
+};
+let timing = {
+    duration: 1000,
+    easing: 'ease-in',
+    fill: 'both',
+    iterations: 1
+};
+
+//Create a KeyframeEffect for each element (this will not kick off any animation)
+ms.forEach((el) => {
+    let effect = new KeyframeEffect(el, effects.translations1, timing);
+    keyframeEffects.push(effect);
+});
+ts.forEach((el) => {
+    let effect = new KeyframeEffect(el, effects.translations2, timing);
+    keyframeEffects2.push(effect);
+});
+console.dir(keyframeEffects);
+console.dir(keyframeEffects2);
+
+//add the six KeyframeEffects to a GroupEffect, and play it on the doucment timeline
+let sequenceEffectA = new SequenceEffect(keyframeEffects);
+//let anim = document.timeline.play(sequenceEffectA);
+
+let sequenceEffectB = new SequenceEffect(keyframeEffects2);
+//let anim2 = document.timeline.play(sequenceEffectB);
+
+let sequenceEffectC = new SequenceEffect([sequenceEffectA, sequenceEffectB]);
+let anim3 = document.timeline.play(sequenceEffectC);
+
+let btn = document.getElementById('player');
+
+btn.addEventListener('click', () => {
+    if (anim3.playState !== 'running') {
+        anim3.play();
+    } else {
+        anim3.pause();
+    }
+});
+
+</script>
+</body>
+</html>
