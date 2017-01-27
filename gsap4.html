@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background: #eee;
+            text-align: center;
+        }
+
+        .circles {
+            border-radius: 50%;
+            border: 1px solid crimson;
+            background-color: indianred;
+            height: 50px;
+            width: 50px;
+        }
+
+        div > #player {
+            display: block;
+        }
+
+        #o1 {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!--<div>-->
+        <!--<button id="player">Play</button>-->
+    <!--</div>-->
+
+    <div class="circles" id="o1"></div>
+    <div class="circles" id="o2"></div>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TimelineMax.min.js"></script>
+    <script>
+        // captures the timeline
+        let timeline = new TimelineLite();
+        // all animatable elements
+        let circles = document.getElementsByClassName('circles');
+        // Individual animatable elements
+        let elem1 = document.getElementById('o1');
+        let elem2 = document.getElementById('o2');
+        // Play button
+        let play = document.getElementById('play');
+
+        // With a timeline we can work with multiple tweens
+        timeline.add(TweenLite.to(circles, 4, { marginLeft: 400, ease: Linear.easeNone }));
+        timeline.add(TweenLite.to(o1, 2.5, {
+            ease: SlowMo.ease.config(0.7, 0.7, false), y: 500
+        }));
+        timeline.add(TweenLite.to(o2, 2.5, {
+            ease: RoughEase.ease.config({
+                template:  Power0.easeNone, strength: 1, points: 20, taper: "none"
+                , randomize:  true, clamp: false}), y: 500, x: 800 }));
+        timeline.add(TweenLite.to(circles, 10, { marginLeft: 800, ease: Linear.easeNone }));
+
+        timeline.play();
+
+//        anim.pause(); // Pause the animation to start, wait for user input
+//        player.addEventListener('click', function() {
+//            if (TweenMax.isTweening(circles) === false) {
+//                anim.play();
+//                player.innerText="Pause";
+//            } else {
+//                anim.pause();
+//                player.innerText='Play';
+//            }
+//        });
+</script>
+</body>
+</html>
